@@ -17,6 +17,16 @@ h1 {
   text-align: center;
 }
 
+.pet-card-row {
+    display: flex;
+    flex-wrap: wrap; // allows wrapping on smaller screens
+    gap: 1rem;
+    justify-content: flex-start; // or center if you prefer
+    align-items: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
 .pet-selector {
   display: flex;
   flex-direction: column;

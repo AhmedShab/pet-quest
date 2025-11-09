@@ -6,6 +6,8 @@
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   color: #f0f0f0;
+  flex: 0 0 160px;
+  scroll-snap-align: start;
 
   img {
     width: 64px;

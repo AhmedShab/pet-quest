@@ -1,6 +1,6 @@
 <h1>{{ title() }}</h1>
 
-<div class="pet-grid">
+<div class="pet-card-row">
   @for (pet of pets(); track pet._id) {
     <app-pet-card [pet]="pet"></app-pet-card>
   }
