@@ -1,12 +1,18 @@
 <h1>{{ title() }}</h1>
 
+<div class="pet-grid">
+  @for (pet of pets(); track pet._id) {
+    <app-pet-card [pet]="pet"></app-pet-card>
+  }
+</div>
+
 @if (pets().length > 0) {
-  <select [ngModel]="selectedPetId()" (ngModelChange)="updatePetId($event)">
-    <option value="">-- Choose a pet --</option>
-    @for (pet of pets(); track pet._id) {
-      <option [value]="pet._id">{{ pet.name }} {{ pet.species === 'Cat' ? '🐱' : '' }}</option>
-    }
-  </select>
+  <app-pet-selector
+    [pets]="pets()"
+    [selectedPetId]="selectedPetId()"
+    (selectPet)="selectPet($event)">
+  </app-pet-selector>
+
 
   <app-task-list [petId]="selectedPetId()"></app-task-list>
 } @else {

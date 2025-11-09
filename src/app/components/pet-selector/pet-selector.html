@@ -1,0 +1,15 @@
+<div class="pet-selector">
+  @for (pet of pets; track pet._id) {
+    <div
+      class="pet-option"
+      [class.selected]="pet._id === selectedPetId"
+      (click)="onSelect(pet._id)"
+    >
+      <img [src]="'http://localhost:3000/' + pet.avatarUrl" [alt]="pet.name" />
+      <div class="info">
+        <div class="name">{{ pet.name }} {{ pet.species === 'Cat' ? '🐱' : '🐹' }}</div>
+        <div class="xp-bar" [style.--xp-percent]="(pet.xp / 20 * 100) + '%'"></div>
+      </div>
+    </div>
+  }
+</div>
