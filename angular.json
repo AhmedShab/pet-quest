@@ -64,7 +64,10 @@
               "buildTarget": "pet-quest:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "proxy.config.json"
+          }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
@@ -87,5 +90,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "67858987-075d-4466-a62a-fd6ad550dc48"
   }
 }
