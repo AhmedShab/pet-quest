@@ -1,8 +1,8 @@
-@if (tasks.length === 0) {
+@if (tasks().length === 0) {
   <div class="empty">No tasks yet for this pet.</div>
 } @else {
   <ul class="task-list">
-    @for (task of tasks; track task._id) {
+    @for (task of tasks(); track task._id) {
       <li [class.completed]="task.completed">
         <div class="task-info">
           <strong>{{ task.type | titlecase }}</strong>

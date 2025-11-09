@@ -1,13 +1,14 @@
 <h1>{{ title() }}</h1>
 
-<div class="pet-selector">
-  <label for="pet">Select Pet:</label>
-  <select [(ngModel)]="selectedPetId" id="pet">
+@if (pets().length > 0) {
+  <select [ngModel]="selectedPetId()" (ngModelChange)="updatePetId($event)">
     <option value="">-- Choose a pet --</option>
-    <option value="69105d0532b2c2dc1c3b4f90">Cacao 🐱</option>
-    <option value="def456">Nibbles 🐹</option>
-    <option value="ghi789">Shadow 🐈</option>
+    @for (pet of pets(); track pet._id) {
+      <option [value]="pet._id">{{ pet.name }} {{ pet.species === 'Cat' ? '🐱' : '' }}</option>
+    }
   </select>
-</div>
 
-<app-task-list [petId]="selectedPetId"></app-task-list>
+  <app-task-list [petId]="selectedPetId()"></app-task-list>
+} @else {
+  <p>Loading pets...</p>
+}
