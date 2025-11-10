@@ -4,4 +4,5 @@ export interface Pet {
   species: 'Cat' | 'Guinea Pig' | string;
   avatarUrl: string;
   xp: number;
+  level: number;
 }

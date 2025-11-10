@@ -2,6 +2,6 @@
   <img [src]="avatarSrc" [alt]="pet.name" />
   <div class="name">{{ pet.name }}</div>
   <div class="species">{{ speciesEmoji }} {{ pet.species }}</div>
-  <div class="xp-label">XP: {{ pet.xp }}</div>
-  <div class="xp-bar" [style.--xp-percent]="xpPercent"></div>
+  <div class="level-label">Level {{ pet.level }}</div>
+  <div class="xp-bar" [style.--xp-percent.%]="getLevelProgress"></div>
 </div>

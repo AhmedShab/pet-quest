@@ -26,8 +26,7 @@ export class App {
   readonly pets = signal<Pet[]>([]);
 
   constructor(private petService: PetService){
-    this.loadPets()
-
+    this.loadPets();
   }
 
   loadPets() {

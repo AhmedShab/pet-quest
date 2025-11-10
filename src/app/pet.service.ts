@@ -12,5 +12,9 @@ export class PetService {
   getPets(): Observable<Pet[]> {
     return this.http.get<Pet[]>('/api/pets');
   }
-  
+
+  getPet(id: string): Observable<Pet> {
+    return this.http.get<Pet>(`/api/pets/${id}`);
+  }
+
 }

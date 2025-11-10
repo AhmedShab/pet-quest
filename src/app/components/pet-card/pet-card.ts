@@ -20,10 +20,13 @@ export class PetCard {
     }
   }
 
-  get xpPercent(): string {
-    const xp = this.pet.xp ?? 0;
-    const max = 20;
-    return `${Math.min((xp / max) * 100, 100)}%`;
+  get getLevelProgress(): number {
+    const thresholds = [0, 20, 40, 60, 80]; // XP required for levels 1–5
+    const currentLevel = this.pet.level;
+    const minXP = thresholds[currentLevel - 1] || 0;
+    const maxXP = thresholds[currentLevel] || 100;
+
+    return Math.round(((this.pet.xp - minXP) / (maxXP - minXP)) * 100);
   }
 
   get avatarSrc(): string {
