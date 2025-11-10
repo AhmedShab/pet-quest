@@ -1,6 +1,6 @@
 import { Component, Input, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskService } from '../../TaskService';
+import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 
 @Component({
@@ -24,7 +24,7 @@ export class TaskList {
     effect(() => {
       const petId = this._petId();
       if (petId) {
-        this.taskService.getTasks().subscribe({
+        this.taskService.getTasksByPet(petId).subscribe({
           next: (data) => this.tasks.set(data),
           error: (err) => console.error('Error loading tasks', err)
         });
@@ -47,7 +47,7 @@ export class TaskList {
   private reloadTasks(): void {
     const petId = this._petId();
     if (petId) {
-      this.taskService.getTasks().subscribe({
+      this.taskService.getTasksByPet(petId).subscribe({
         next: (data) => this.tasks.set(data),
         error: (err) => console.error('Error reloading tasks', err)
       });
