@@ -1,14 +1,13 @@
 <h1>{{ title() }}</h1>
 
 <div class="pet-card-row">
-  @for (pet of pets(); track pet._id) {
+  @for (pet of petStore.pets(); track pet._id) {
     <app-pet-card [pet]="pet"></app-pet-card>
   }
 </div>
 
-@if (pets().length > 0) {
+@if (petStore.pets().length > 0) {
   <app-pet-selector
-    [pets]="pets()"
     [selectedPetId]="selectedPetId()"
     (selectPet)="selectPet($event)">
   </app-pet-selector>

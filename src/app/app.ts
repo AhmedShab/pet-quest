@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { TaskList } from './components/task-list/task-list';
@@ -7,6 +7,7 @@ import { PetService } from './pet.service';
 import { PetCard } from './components/pet-card/pet-card';
 import { CommonModule } from '@angular/common';
 import { PetSelector } from './components/pet-selector/pet-selector';
+import { PetStoreService } from './services/pet-store.service';
 
 @Component({
   selector: 'app-root',
@@ -23,17 +24,10 @@ import { PetSelector } from './components/pet-selector/pet-selector';
 export class App {
   protected readonly title = signal('pet-quest');
   protected readonly selectedPetId = signal<string>('');
-  readonly pets = signal<Pet[]>([]);
+  readonly petStore = inject(PetStoreService);
 
-  constructor(private petService: PetService){
-    this.loadPets();
-  }
-
-  loadPets() {
-    this.petService.getPets().subscribe({
-      next: (data) => this.pets.set(data),
-      error: (err) => console.error('Error loading pets', err)
-    });
+  constructor(){
+    this.petStore.loadPets();
   }
 
   selectPet(id: string) {

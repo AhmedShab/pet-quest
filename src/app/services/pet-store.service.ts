@@ -6,11 +6,22 @@ import { PetService } from '../pet.service';
   providedIn: 'root',
 })
 export class PetStoreService {
-  readonly pet = signal<Pet | null>(null);
+  readonly pets = signal<Pet[]>([]);
 
   constructor(private petService: PetService) {}
 
-  load(id: string): void {
-    this.petService.getPet(id).subscribe(p => this.pet.set(p));
+  loadPets() {
+    this.petService.getPets().subscribe({
+      next: (data) => this.pets.set(data),
+      error: (err) => console.error('Error loading pets', err)
+    });
+  }
+
+  updatePet(updatedPet: Pet) {
+    this.pets.update(pets =>
+      pets.map(pet =>
+        pet._id === updatedPet._id ? { ...pet, ...updatedPet } : pet
+      )
+    );
   }
 }
