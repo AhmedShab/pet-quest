@@ -4,6 +4,7 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 import { PetStoreService } from '../../services/pet-store.service';
 import { Pet } from '../../models/pet.model';
+import { TaskStoreService } from '../../services/task-store.service';
 
 @Component({
   selector: 'app-task-list',
@@ -14,46 +15,43 @@ import { Pet } from '../../models/pet.model';
 export class TaskList {
   private readonly taskService = inject(TaskService);
   readonly petStore = inject(PetStoreService);
+  readonly taskStore = inject(TaskStoreService);
 
   // Reactive input
-  private readonly _petId = signal<string>('');
-  @Input() set petId(id: string) {
-    this._petId.set(id);
+  private readonly _petType = signal<string>('');
+  @Input() set petType(type: string) {
+    this._petType.set(type);
   }
 
-  readonly tasks = signal<Task[]>([]);
+  protected readonly selectedPetType = signal<string>('');
 
   constructor() {
-    effect(() => {
-      const petId = this._petId();
-      if (petId) {
-        this.taskService.getTasksByPet(petId).subscribe({
-          next: (data) => this.tasks.set(data),
-          error: (err) => console.error('Error loading tasks', err)
-        });
-      }
-    });
+
   }
 
-  completeTask(taskId: string): void {
-    this.taskService.completeTask(taskId).subscribe({
-      next: (data) => this.reloadTasks(taskId, data),
-      error: (err) => console.error('Error loading tasks', err)
-    });
-  }
+  // completeTask(taskId: string): void {
+  //   this.taskService.completeTask(taskId).subscribe({
+  //     next: (data) => this.reloadTasks(taskId, data),
+  //     error: (err) => console.error('Error loading tasks', err)
+  //   });
+  // }
 
-  deleteTask(taskId: string): void {
-    this.taskService.deleteTask(taskId).subscribe(() => {
-      this.tasks.update(tasks => tasks.filter(task => task._id !== taskId));
-    });
-  }
+  // deleteTask(taskId: string): void {
+  //   this.taskService.deleteTask(taskId).subscribe(() => {
+  //     this.tasks.update(tasks => tasks.filter(task => task._id !== taskId));
+  //   });
+  // }
 
-  private reloadTasks(taskId: string, data: { task: Task, pet: Pet }): void {
-    this.tasks.update(tasks =>
-      tasks.map(task =>
-        task._id === taskId ? { ...task, ...data.task } : task
-      )
-    );
-    this.petStore.updatePet(data.pet);
+  // private reloadTasks(taskId: string, data: { task: Task, pet: Pet }): void {
+  //   this.tasks.update(tasks =>
+  //     tasks.map(task =>
+  //       task._id === taskId ? { ...task, ...data.task } : task
+  //     )
+  //   );
+  //   this.petStore.updatePet(data.pet);
+  // }
+
+  selectPet(type: string) {
+    this.selectedPetType.set(type);
   }
 }

@@ -8,29 +8,32 @@ import { PetCard } from './components/pet-card/pet-card';
 import { CommonModule } from '@angular/common';
 import { PetSelector } from './components/pet-selector/pet-selector';
 import { PetStoreService } from './services/pet-store.service';
+import { TaskStoreService } from './services/task-store.service';
 
 @Component({
   selector: 'app-root',
    imports: [
     CommonModule,
     FormsModule,
-    TaskList,
     PetCard,
-    PetSelector
+    PetSelector,
+    TaskList
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected readonly title = signal('pet-quest');
-  protected readonly selectedPetId = signal<string>('');
   readonly petStore = inject(PetStoreService);
+  readonly TaskStore = inject(TaskStoreService);
+  selectedType: string = 'Cat';
 
   constructor(){
     this.petStore.loadPets();
   }
 
-  selectPet(id: string) {
-    this.selectedPetId.set(id);
+  onTypeChange(type: string) {
+    this.selectedType = type;
+    this.TaskStore.loadTasks(type);
   }
 }

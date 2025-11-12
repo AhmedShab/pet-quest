@@ -1,12 +1,17 @@
-@if (tasks().length === 0) {
-  <div class="empty">No tasks yet for this pet.</div>
+@if (taskStore.tasks().length === 0) {
+  <div class="empty">No tasks yet for this group.</div>
 } @else {
   <ul class="task-list">
-    @for (task of tasks(); track task._id) {
+    @for (task of taskStore.tasks(); track task._id) {
       <li [class.completed]="task.completed">
         <div class="task-info">
-          <strong>{{ task.type | titlecase }}</strong>
-          <span>🕒 {{ task.dueDate | date:'shortTime' }}</span>
+          <strong>{{ task.label }}</strong>
+          <span class="meta">
+            🐾 {{ task.petType | titlecase }} •
+            🕒 {{ task.date | date:'shortTime' }} •
+            ⭐ {{ task.xpReward }} XP
+          </span>
+
           @if (task.completed) {
             <span class="status">✅ Completed</span>
           }
@@ -14,8 +19,8 @@
 
         @if (!task.completed) {
           <div class="task-actions">
-            <button (click)="completeTask(task._id)">Complete</button>
-            <button (click)="deleteTask(task._id)">Delete</button>
+            <!-- <button (click)="completeTask(task._id)">Complete</button>
+            <button (click)="deleteTask(task._id)">Delete</button> -->
           </div>
         }
       </li>

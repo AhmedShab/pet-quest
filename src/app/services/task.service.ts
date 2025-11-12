@@ -13,8 +13,8 @@ export class TaskService {
     return this.http.get<Task[]>('/api/tasks');
   }
 
-  getTasksByPet(petId: string): Observable<Task[]> {
-    return this.http.get<Task[]>(`/api/tasks/${petId}`);
+  getTasksByPet(type: string): Observable<Task[]> {
+    return this.http.get<Task[]>(`/api/tasks/${type}`);
   }
 
 createTask(task: Task): Observable<Task> {

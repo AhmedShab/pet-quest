@@ -1,15 +1,8 @@
-<div class="pet-selector">
-  @for (pet of petStore.pets(); track pet._id) {
-    <div
-      class="pet-option"
-      [class.selected]="pet._id === selectedPetId"
-      (click)="onSelect(pet._id)"
-    >
-      <img [src]="'http://localhost:3000/' + pet.avatarUrl" [alt]="pet.name" />
-      <div class="info">
-        <div class="name">{{ pet.name }} {{ pet.species === 'Cat' ? '🐱' : '🐹' }}</div>
-        <div class="xp-bar" [style.--xp-percent]="getLevelProgress(pet)"></div>
-      </div>
-    </div>
-  }
+<div class="type-selector">
+  <button class="type-option" (click)="onSelectType('cat')">
+    🐱 Cats
+  </button>
+  <button class="type-option" (click)="onSelectType('guineaPig')">
+    🐹 Guinea Pig
+  </button>
 </div>

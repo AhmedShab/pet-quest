@@ -7,13 +7,10 @@
 </div>
 
 @if (petStore.pets().length > 0) {
-  <app-pet-selector
-    [selectedPetId]="selectedPetId()"
-    (selectPet)="selectPet($event)">
-  </app-pet-selector>
+  <app-pet-selector (selectPet)="onTypeChange($event)"></app-pet-selector>
 
 
-  <app-task-list [petId]="selectedPetId()"></app-task-list>
+  <app-task-list></app-task-list>
 } @else {
   <p>Loading pets...</p>
 }

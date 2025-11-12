@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Pet } from '../../models/pet.model';
-import { environment } from '../../../environments/environment';
 import { PetStoreService } from '../../services/pet-store.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { PetStoreService } from '../../services/pet-store.service';
   styleUrl: './pet-selector.scss'
 })
 export class PetSelector {
-  @Input() selectedPetId: string = '';
   @Output() selectPet = new EventEmitter<string>();
   readonly petStore = inject(PetStoreService);
 
@@ -25,7 +23,7 @@ export class PetSelector {
     return `${Math.min(Math.max(progress * 100, 0), 100)}%`;
   }
 
-  onSelect(id: string) {
-    this.selectPet.emit(id);
+  onSelectType(type: 'cat' | 'guineaPig') {
+    this.selectPet.emit(type);
   }
 }
