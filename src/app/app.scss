@@ -7,6 +7,7 @@
   color: #f0f0f0;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
   min-height: 100vh;
+  align-items: center;
 }
 
 h1 {
@@ -22,57 +23,32 @@ h1 {
     flex-wrap: wrap; // allows wrapping on smaller screens
     gap: 1rem;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    width: min(100%, 960px);
+    margin: 0 auto;
   }
 
-.pet-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  max-width: 300px;
-  margin: 0 auto;
-
-  label {
-    font-weight: 500;
-    font-size: 1rem;
+@media (max-width: 768px) {
+  :host {
+    padding: 1.5rem 1rem;
+    gap: 1.5rem;
   }
 
-  select {
-    background-color: #2c2f33;
-    color: #e0e0e0;
-    border: 1px solid #555;
-    padding: 0.5rem;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .pet-select {
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    border: 1px solid #555;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    appearance: none;
+  .pet-card-row {
+    gap: 0.75rem;
     width: 100%;
-    max-width: 300px;
-    margin-top: 1rem;
+  }
+}
 
-    option {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
-      padding: 0.5rem;
-    }
-
-    &:focus {
-      outline: none;
-      border-color: #ffd700;
-      box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
-    }
+@media (max-width: 480px) {
+  :host {
+    padding: 1.25rem 0.75rem;
+    gap: 1.25rem;
   }
 
+  h1 {
+    font-size: 1.6rem;
   }
+}
