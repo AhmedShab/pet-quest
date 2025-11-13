@@ -29,12 +29,12 @@ export class TaskList {
 
   }
 
-  // completeTask(taskId: string): void {
-  //   this.taskService.completeTask(taskId).subscribe({
-  //     next: (data) => this.reloadTasks(taskId, data),
-  //     error: (err) => console.error('Error loading tasks', err)
-  //   });
-  // }
+  completeTask(taskId: string): void {
+    this.taskService.completeTask(taskId).subscribe({
+      next: (data) => this.reloadTasks(data),
+      error: (err) => console.error('Error loading tasks', err)
+    });
+  }
 
   // deleteTask(taskId: string): void {
   //   this.taskService.deleteTask(taskId).subscribe(() => {
@@ -42,14 +42,10 @@ export class TaskList {
   //   });
   // }
 
-  // private reloadTasks(taskId: string, data: { task: Task, pet: Pet }): void {
-  //   this.tasks.update(tasks =>
-  //     tasks.map(task =>
-  //       task._id === taskId ? { ...task, ...data.task } : task
-  //     )
-  //   );
-  //   this.petStore.updatePet(data.pet);
-  // }
+  private reloadTasks(data: { task: Task, pets: Pet[] }): void {
+    this.taskStore.updateTask(data.task);
+    this.petStore.updatePets(data.pets);
+  }
 
   selectPet(type: string) {
     this.selectedPetType.set(type);

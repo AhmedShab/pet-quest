@@ -3,5 +3,5 @@
   <div class="name">{{ pet.name }}</div>
   <div class="species">{{ speciesEmoji }} {{ pet.species }}</div>
   <div class="level-label">Level {{ pet.level }}</div>
-  <div class="xp-bar" [style.--xp-percent.%]="getLevelProgress"></div>
+  <div class="xp-bar" [style.--xp-percent]="getLevelProgress + '%'"></div>
 </div>

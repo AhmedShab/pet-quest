@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, Output, EventEmitter, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Pet } from '../../models/pet.model';
 import { PetStoreService } from '../../services/pet-store.service';
@@ -12,6 +12,7 @@ import { PetStoreService } from '../../services/pet-store.service';
 export class PetSelector {
   @Output() selectPet = new EventEmitter<string>();
   readonly petStore = inject(PetStoreService);
+  readonly selectedType = signal<'cat' | 'guineaPig' | ''>('');
 
   getLevelProgress(pet: Pet): string {
     const thresholds = [0, 20, 40, 60, 80]; // XP required for levels 1–5
@@ -24,6 +25,7 @@ export class PetSelector {
   }
 
   onSelectType(type: 'cat' | 'guineaPig') {
+    this.selectedType.set(type);
     this.selectPet.emit(type);
   }
 }

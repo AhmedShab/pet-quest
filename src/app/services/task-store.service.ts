@@ -16,4 +16,12 @@ export class TaskStoreService {
       error: (err) => console.error('Error loading tasks', err)
     });
   }
+
+  updateTask(updatedTask: Task) {
+      this.tasks.update(tasks =>
+        tasks.map(task =>
+          task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+        )
+      );
+    }
 }

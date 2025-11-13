@@ -21,8 +21,8 @@ h1 {
     display: flex;
     flex-wrap: wrap; // allows wrapping on smaller screens
     gap: 1rem;
-    justify-content: flex-start; // or center if you prefer
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
   }

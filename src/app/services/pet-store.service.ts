@@ -17,11 +17,13 @@ export class PetStoreService {
     });
   }
 
-  updatePet(updatedPet: Pet) {
+  updatePets(updatedPets: Pet[]) {
     this.pets.update(pets =>
-      pets.map(pet =>
-        pet._id === updatedPet._id ? { ...pet, ...updatedPet } : pet
-      )
+      pets.map(pet => {
+        const updated = updatedPets.find(u => u._id === pet._id);
+        return updated ? { ...pet, ...updated } : pet;
+      })
     );
   }
+
 }

@@ -1,8 +1,20 @@
-<div class="type-selector">
-  <button class="type-option" (click)="onSelectType('cat')">
-    🐱 Cats
+<div class="pet-selector">
+  <button
+    type="button"
+    class="pet-option"
+    [class.selected]="selectedType() === 'cat'"
+    (click)="onSelectType('cat')"
+  >
+    <span class="icon">🐱</span>
+    <span class="label">Cats</span>
   </button>
-  <button class="type-option" (click)="onSelectType('guineaPig')">
-    🐹 Guinea Pig
+  <button
+    type="button"
+    class="pet-option"
+    [class.selected]="selectedType() === 'guineaPig'"
+    (click)="onSelectType('guineaPig')"
+  >
+    <span class="icon">🐹</span>
+    <span class="label">Guinea Pigs</span>
   </button>
 </div>
