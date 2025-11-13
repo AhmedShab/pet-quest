@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { PetSelector } from './components/pet-selector/pet-selector';
 import { PetStoreService } from './services/pet-store.service';
 import { TaskStoreService } from './services/task-store.service';
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './components/login/login';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +19,8 @@ import { TaskStoreService } from './services/task-store.service';
     FormsModule,
     PetCard,
     PetSelector,
-    TaskList
+    TaskList,
+    LoginComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -26,14 +29,30 @@ export class App {
   protected readonly title = signal('pet-quest');
   readonly petStore = inject(PetStoreService);
   readonly TaskStore = inject(TaskStoreService);
+  readonly auth = inject(AuthService);
+  private readonly dataInitialized = signal(false);
   selectedType: string = 'Cat';
 
   constructor(){
-    this.petStore.loadPets();
+    effect(() => {
+      if (this.auth.isAuthenticated() && !this.dataInitialized()) {
+        this.bootstrapData();
+        this.dataInitialized.set(true);
+      } else if (!this.auth.isAuthenticated() && this.dataInitialized()) {
+        this.dataInitialized.set(false);
+      }
+    });
+
+    this.auth.initializeFromStorage().subscribe();
   }
 
   onTypeChange(type: string) {
     this.selectedType = type;
     this.TaskStore.loadTasks(type);
+  }
+
+  bootstrapData(): void {
+    this.petStore.loadPets();
+    this.TaskStore.loadTasks(this.selectedType);
   }
 }

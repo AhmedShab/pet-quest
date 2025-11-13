@@ -1,16 +1,18 @@
 <h1>{{ title() }}</h1>
 
-<div class="pet-card-row">
-  @for (pet of petStore.pets(); track pet._id) {
-    <app-pet-card [pet]="pet"></app-pet-card>
+@if (auth.isAuthenticated()) {
+  <div class="pet-card-row">
+    @for (pet of petStore.pets(); track pet._id) {
+      <app-pet-card [pet]="pet"></app-pet-card>
+    }
+  </div>
+
+  @if (petStore.pets().length > 0) {
+    <app-pet-selector (selectPet)="onTypeChange($event)"></app-pet-selector>
+    <app-task-list></app-task-list>
+  } @else {
+    <p>Loading pets...</p>
   }
-</div>
-
-@if (petStore.pets().length > 0) {
-  <app-pet-selector (selectPet)="onTypeChange($event)"></app-pet-selector>
-
-
-  <app-task-list></app-task-list>
 } @else {
-  <p>Loading pets...</p>
+  <app-login></app-login>
 }
