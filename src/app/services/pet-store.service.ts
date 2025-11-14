@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Pet } from '../models/pet.model';
 import { PetService } from '../pet.service';
+import { LEVEL_DEFINITIONS } from '../constants/level-definitions';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,21 @@ export class PetStoreService {
     });
   }
 
-  updatePets(updatedPets: Pet[]) {
+  updatePets(xpGain: number) {
     this.pets.update(pets =>
       pets.map(pet => {
-        const updated = updatedPets.find(u => u._id === pet._id);
-        return updated ? { ...pet, ...updated } : pet;
+        const xp = pet.xp + xpGain;
+        const level = this.getLevelForXp(xp);
+        return { ...pet, xp, level };
       })
     );
   }
 
+  private getLevelForXp(xp: number): number {
+    const levelDefinition = [...LEVEL_DEFINITIONS]
+      .reverse()
+      .find(def => xp >= def.minXp);
+
+    return levelDefinition ? levelDefinition.level : LEVEL_DEFINITIONS[0].level;
+  }
 }

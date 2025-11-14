@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Pet } from '../../models/pet.model';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
+import { LEVEL_DEFINITIONS } from '../../constants/level-definitions';
 
 @Component({
   selector: 'app-pet-card',
@@ -21,12 +22,24 @@ export class PetCard {
   }
 
   get getLevelProgress(): number {
-    const thresholds = [0, 20, 40, 60, 80]; // XP required for levels 1–5
     const currentLevel = this.pet.level;
-    const minXP = thresholds[currentLevel - 1] || 0;
-    const maxXP = thresholds[currentLevel] || 100;
+    const levelIndex = LEVEL_DEFINITIONS.findIndex(def => def.level === currentLevel);
+    const fallbackDefinition = LEVEL_DEFINITIONS[0];
 
-    return Math.round(((this.pet.xp - minXP) / (maxXP - minXP)) * 100);
+    const currentDefinition = levelIndex >= 0 ? LEVEL_DEFINITIONS[levelIndex] : fallbackDefinition;
+    const nextDefinition = levelIndex >= 0 && levelIndex < LEVEL_DEFINITIONS.length - 1
+      ? LEVEL_DEFINITIONS[levelIndex + 1]
+      : null;
+
+    const minXP = currentDefinition.minXp;
+    const maxXP = nextDefinition ? nextDefinition.minXp : this.pet.xp;
+
+    if (!nextDefinition) {
+      return 100;
+    }
+
+    const progress = (this.pet.xp - minXP) / (maxXP - minXP);
+    return Math.round(Math.min(Math.max(progress, 0), 1) * 100);
   }
 
   get avatarSrc(): string {

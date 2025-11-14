@@ -5,4 +5,5 @@ export interface Pet {
   avatarUrl: string;
   xp: number;
   level: number;
+  owner: string;
 }

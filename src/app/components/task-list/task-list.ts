@@ -1,9 +1,8 @@
 import { Component, Input, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
+import { TaskService } from '../../services/task.service';
 import { PetStoreService } from '../../services/pet-store.service';
-import { Pet } from '../../models/pet.model';
 import { TaskStoreService } from '../../services/task-store.service';
 
 @Component({
@@ -29,10 +28,15 @@ export class TaskList {
 
   }
 
-  completeTask(taskId: string): void {
-    this.taskService.completeTask(taskId).subscribe({
-      next: (data) => this.reloadTasks(data),
-      error: (err) => console.error('Error loading tasks', err)
+  completeTask(task: Task): void {
+    const prev = { ...task };
+    this.updateUi(task);
+
+    this.taskService.completeTask(task._id).subscribe({
+      error: (err) => {
+        console.error('Error saving task completion', err)
+        this.updateUi(prev);
+      }
     });
   }
 
@@ -42,9 +46,9 @@ export class TaskList {
   //   });
   // }
 
-  private reloadTasks(data: { task: Task, pets: Pet[] }): void {
-    this.taskStore.updateTask(data.task);
-    this.petStore.updatePets(data.pets);
+  private updateUi(task: Task): void {
+    this.taskStore.updateTask(task._id);
+    this.petStore.updatePets(task.xpReward);
   }
 
   selectPet(type: string) {

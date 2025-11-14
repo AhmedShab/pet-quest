@@ -17,10 +17,10 @@ export class TaskStoreService {
     });
   }
 
-  updateTask(updatedTask: Task) {
+  updateTask(taskId: string) {
       this.tasks.update(tasks =>
         tasks.map(task =>
-          task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+          task._id === taskId ? { ...task, completed: true } : task
         )
       );
     }
